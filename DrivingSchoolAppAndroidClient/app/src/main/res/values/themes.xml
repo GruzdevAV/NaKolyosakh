@@ -1,0 +1,27 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <!-- Заменил Theme.MaterialComponents.DayNight.DarkActionBar на
+    Theme.AppCompat.DayNight.DarkActionBar, чтобы изменять стиль кнопок-->
+    <style name="Theme.DrivingSchoolAppAndroidClient" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_variant</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorSecondaryVariant">@color/purple_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.DrivingSchoolAppAndroidClient.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.DrivingSchoolAppAndroidClient.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.DrivingSchoolAppAndroidClient.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>

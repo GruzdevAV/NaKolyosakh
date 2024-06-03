@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center|top"
+    android:orientation="vertical">
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2" />
+
+    <EditText
+        android:id="@+id/et_email"
+        style="@style/TextField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="email"
+        android:inputType="textEmailAddress"
+        tools:layout_editor_absoluteX="73dp"
+        tools:layout_editor_absoluteY="38dp" />
+
+    <EditText
+        android:id="@+id/et_password"
+        style="@style/TextField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="пароль"
+        android:inputType="textPassword"
+        tools:layout_editor_absoluteX="86dp"
+        tools:layout_editor_absoluteY="131dp" />
+
+    <Button
+        android:id="@+id/btn_login"
+        style="@style/MainButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Войти" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5" />
+
+</LinearLayout>

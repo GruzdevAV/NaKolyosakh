@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PackageProjectUrl></PackageProjectUrl>
+    <RepositoryUrl></RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="App_Data - Копировать\**" />
+    <Content Remove="App_Data - Копировать\**" />
+    <EmbeddedResource Remove="App_Data - Копировать\**" />
+    <None Remove="App_Data - Копировать\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="ErikEJ.EntityFrameworkCore.SqlServer.DateOnlyTimeOnly" Version="7.0.8" />
+    <PackageReference Include="Google.Apis.Sheets.v4" Version="1.67.0.3148" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.12">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DrivingSchoolAPIModels">
+      <HintPath>..\DrivingSchoolAPIModels\bin\Debug\net7.0\DrivingSchoolAPIModels.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

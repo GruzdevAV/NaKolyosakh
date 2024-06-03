@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.drivingschoolappandroidclient.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.drivingschoolappandroidclient.ui.profile.ProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/nav_register_user"
+        android:name="com.example.drivingschoolappandroidclient.ui.registration.RegisterUserFragment"
+        android:label="@string/menu_register_user"
+        tools:layout="@layout/fragment_register_user" />
+    <fragment
+        android:id="@+id/nav_students"
+        android:name="com.example.drivingschoolappandroidclient.ui.students.StudentsFragment"
+        android:label="@string/menu_students"
+        tools:layout="@layout/fragment_students" />
+    <fragment
+        android:id="@+id/nav_instructors"
+        android:name="com.example.drivingschoolappandroidclient.ui.instructors.InstructorsFragment"
+        android:label="@string/menu_instructors"
+        tools:layout="@layout/fragment_instructors" />
+    <fragment
+        android:id="@+id/nav_schedules"
+        android:name="com.example.drivingschoolappandroidclient.ui.schedules.SchedulesFragment"
+        android:label="@string/menu_schedules"
+        tools:layout="@layout/fragment_schedules" >
+        <action
+            android:id="@+id/action_nav_schedules_to_nav_add_outer_schedule"
+            app:destination="@id/nav_add_outer_schedule" />
+        <action
+            android:id="@+id/action_nav_schedules_to_nav_add_inner_schedule"
+            app:destination="@id/nav_add_inner_schedule" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_classes"
+        android:name="com.example.drivingschoolappandroidclient.ui.classes.ClassesFragment"
+        android:label="@string/menu_classes"
+        tools:layout="@layout/fragment_classes" >
+        <action
+            android:id="@+id/action_nav_classes_to_post_grade"
+            app:destination="@id/nav_post_grade" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_grades"
+        android:name="com.example.drivingschoolappandroidclient.ui.grades.GradesFragment"
+        android:label="@string/menu_grades"
+        tools:layout="@layout/fragment_grades" />
+    <fragment
+        android:id="@+id/nav_add_outer_schedule"
+        android:name="com.example.drivingschoolappandroidclient.ui.schedules.AddOuterScheduleFragment"
+        android:label="@string/menu_add_outer_schedule"
+        tools:layout="@layout/fragment_add_outer_schedule" />
+    <fragment
+        android:id="@+id/nav_add_inner_schedule"
+        android:name="com.example.drivingschoolappandroidclient.ui.schedules.AddInnerScheduleFragment"
+        android:label="@string/menu_add_inner_schedule"
+        tools:layout="@layout/fragment_add_inner_schedule" />
+    <fragment
+        android:id="@+id/nav_post_grade"
+        android:name="com.example.drivingschoolappandroidclient.ui.classes.PostGradeFragment"
+        android:label="@string/menu_post_grade"
+        tools:layout="@layout/fragment_post_grade" />
+</navigation>

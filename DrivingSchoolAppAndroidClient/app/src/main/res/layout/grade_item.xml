@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@drawable/field"
+    android:orientation="vertical">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView36"
+                style="@style/Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Занятие: " />
+
+            <TextView
+                android:id="@+id/tv_grade_class"
+                style="@style/Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView37"
+                style="@style/Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ученик: " />
+
+            <TextView
+                android:id="@+id/tv_grade_student"
+                style="@style/Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView38"
+                style="@style/Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Инструктор: " />
+
+            <TextView
+                android:id="@+id/tv_grade_instructor"
+                style="@style/Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView39"
+                style="@style/Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Оценка: " />
+
+            <TextView
+                android:id="@+id/tv_grade_grade"
+                style="@style/Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView40"
+                style="@style/Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Комментарий: " />
+
+            <TextView
+                android:id="@+id/tv_grade_comment"
+                style="@style/Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

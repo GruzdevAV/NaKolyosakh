@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.profile.ProfileFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_pfp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    style="@style/Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="Роль:" />
+
+                <TextView
+                    android:id="@+id/tv_role"
+                    style="@style/Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="tv_role" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView5"
+                    style="@style/Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="Почта:" />
+
+                <TextView
+                    android:id="@+id/tv_email"
+                    style="@style/Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="tv_email" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tr_profile_lastname"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView11"
+                    style="@style/Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="Фамилия:"
+                    tools:layout_editor_absoluteX="95dp"
+                    tools:layout_editor_absoluteY="113dp" />
+
+                <EditText
+                    android:id="@+id/et_lastname"
+                    style="@style/TextField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Фамилия (обязательно)"
+                    android:inputType="text"
+                    tools:layout_editor_absoluteX="199dp"
+                    tools:layout_editor_absoluteY="167dp" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tr_profile_firstname"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView8"
+                    style="@style/Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="Имя:" />
+
+                <EditText
+                    android:id="@+id/et_firstname"
+                    style="@style/TextField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Имя (обязательно)"
+                    android:inputType="text" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tr_profile_patronymic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView9"
+                    style="@style/Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="Отчество:" />
+
+                <EditText
+                    android:id="@+id/et_patronymic"
+                    style="@style/TextField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Отчество"
+                    android:inputType="text" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tr_profile_phone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView10"
+                    style="@style/Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="Номер телефона:" />
+
+                <EditText
+                    android:id="@+id/et_phone"
+                    style="@style/TextField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Номер телефона"
+                    android:inputType="phone" />
+            </TableRow>
+        </TableLayout>
+
+        <Button
+            android:id="@+id/btn_save"
+            style="@style/MainButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Сохранить изменения" />
+
+        <Button
+            android:id="@+id/btn_exit"
+            style="@style/SecondaryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Выйти" />
+
+    </LinearLayout>
+</FrameLayout>

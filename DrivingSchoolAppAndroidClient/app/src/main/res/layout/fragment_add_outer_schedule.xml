@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.schedules.AddOuterScheduleFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:orientation="vertical">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="60pt"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="Id google-таблицы" />
+
+                <EditText
+                    android:id="@+id/et_id_google_sheet"
+                    style="@style/TextField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="text" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="60pt"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="Название страницы" />
+
+                <EditText
+                    android:id="@+id/et_page_name"
+                    style="@style/TextField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="text" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="60pt"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="Диапазон времени" />
+
+                <EditText
+                    android:id="@+id/et_time_range"
+                    style="@style/TextField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="text" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="60pt"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="Диапазон дат" />
+
+                <EditText
+                    android:id="@+id/et_date_range"
+                    style="@style/TextField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="text" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="60pt"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="Диапазон занятий" />
+
+                <EditText
+                    android:id="@+id/et_classes_range"
+                    style="@style/TextField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="text" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="60pt"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="Пример свободной ячейки" />
+
+                <EditText
+                    android:id="@+id/et_free_range"
+                    style="@style/TextField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="text" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="60pt"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="Пример несвободной ячейки" />
+
+                <EditText
+                    android:id="@+id/et_not_free_range"
+                    style="@style/TextField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="text" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="60pt"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="Ячейка с годом" />
+
+                <EditText
+                    android:id="@+id/et_year_range"
+                    style="@style/TextField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="text" />
+
+            </TableRow>
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_add_outer_schedule_ok"
+                style="@style/MainButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Принять" />
+
+            <Button
+                android:id="@+id/btn_add_outer_schedule_cancel"
+                style="@style/SecondaryButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Отменить" />
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

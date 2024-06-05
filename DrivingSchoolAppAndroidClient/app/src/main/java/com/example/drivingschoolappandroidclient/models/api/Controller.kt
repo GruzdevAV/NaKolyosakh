@@ -30,7 +30,7 @@ class Controller {
     }
     var loginResponse: MutableLiveData<LoginResponse?> = MutableLiveData(null)
     companion object{
-//        const val BASE_URL = "https://gruzdevav.somee.com/api/"
-        const val BASE_URL = "http://192.168.43.226:45455/api/"
+        const val BASE_URL = "https://gruzdevav.somee.com/api/"
+//        const val BASE_URL = "http://192.168.43.226:45457/api/"
     }
 }

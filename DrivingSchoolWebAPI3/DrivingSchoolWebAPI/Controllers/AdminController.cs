@@ -108,7 +108,7 @@ namespace DrivingSchoolWebAPI.Controllers
                 LastName = model.LastName,
                 Patronymic = model.Patronymic
             };
-            // Добавление студента в базу данных
+            // Добавление ученика в базу данных
             await _context.Students.AddAsync(student);
             await _context.SaveChangesAsync();
             return Ok(new Response<Student>
@@ -195,7 +195,7 @@ namespace DrivingSchoolWebAPI.Controllers
                     return NotFound(new Response
                     {
                         Status = "Failure",
-                        Message = $"Студент или инструктор не найдены."
+                        Message = $"Ученик или инструктор не найдены."
                     });
                 student.Instructor = instructor;
                 student.InstructorId = model.InstructorId;
@@ -203,7 +203,7 @@ namespace DrivingSchoolWebAPI.Controllers
                 return Ok(new Response<InstructorStudentPairModel>
                 {
                     Status = "Success",
-                    Message = "Ученик назначен успешно",
+                    Message = "Инструктор назначен успешно",
                     Package = model
                 });
 

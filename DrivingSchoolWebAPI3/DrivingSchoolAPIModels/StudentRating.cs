@@ -1,7 +1,7 @@
 ﻿namespace DrivingSchoolAPIModels
 {
     /// <summary>
-    /// Студент с рейтингом
+    /// Ученик с рейтингом
     /// </summary>
     public class StudentRating : Student
     {

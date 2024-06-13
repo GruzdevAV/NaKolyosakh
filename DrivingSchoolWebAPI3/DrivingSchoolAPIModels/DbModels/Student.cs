@@ -4,7 +4,7 @@ using System.Drawing;
 namespace DrivingSchoolAPIModels
 {
     /// <summary>
-    /// Студент
+    /// Ученик
     /// </summary>
     public class Student : IPerson
     {

@@ -37,7 +37,7 @@ namespace DrivingSchoolWebAPI.Controllers
             };
         }
         /// <summary>
-        /// Получить список всех студентов
+        /// Получить список всех учеников
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -83,7 +83,7 @@ namespace DrivingSchoolWebAPI.Controllers
             };
         }
         /// <summary>
-        /// Получить список всех студентов
+        /// Получить ученика по id
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -285,17 +285,89 @@ namespace DrivingSchoolWebAPI.Controllers
 
         }
         /// <summary>
+        /// Получить инструктора с рейтингом по id
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route(nameof(GetInstructorRating))]
+        public async Task<ActionResult<Response<InstructorRating>>> GetInstructorRating(int instructorId)
+        {
+            try
+            {
+                var instructorRating = (from instructor in _context.Instructors
+                                         join user in _context.Users on instructor.UserId equals user.Id
+                                         join instructorSchedule in _context.InnerSchedulesOfInstructors on instructor.InstructorId equals instructorSchedule.InstructorId into schedules
+                                         from schedule in schedules.DefaultIfEmpty()
+                                         join classObj in _context.Classes on schedule.InnerScheduleOfInstructorId equals classObj.InnerScheduleOfInstructorId into classes
+                                         from classItem in classes.DefaultIfEmpty()
+                                         join grade in _context.GradesByStudentToInstructor on classItem.ClassId equals grade.ClassId into grades
+                                         from gradeItem in grades.DefaultIfEmpty()
+                                         group new { instructor, gradeItem, user } by new
+                                         {
+                                             instructor.InstructorId,
+                                             instructor.UserId,
+                                             user.FirstName,
+                                             user.LastName,
+                                             user.Patronymic,
+                                             user.Email,
+                                             user.PhoneNumber,
+                                             user.ProfilePictureBytes
+                                         } into g
+                                         select new InstructorRating
+                                         {
+                                             InstructorId = g.Key.InstructorId,
+                                             UserId = g.Key.UserId,
+                                             Grade = g.Average(x => (float?)x.gradeItem.Grade) ?? 0.0f,
+                                             NumberOfGrades = g.Count(x => x.gradeItem != null),
+                                             User = new ApplicationUser
+                                             {
+                                                 Email = g.Key.Email,
+                                                 PhoneNumber = g.Key.PhoneNumber,
+                                                 FirstName = g.Key.FirstName,
+                                                 LastName = g.Key.LastName,
+                                                 Patronymic = g.Key.Patronymic,
+                                                 ProfilePictureBytes = g.Key.ProfilePictureBytes
+                                             }
+                                         });
+                if (instructorRating == null)
+                    return new Response<InstructorRating>
+                    {
+                        Status = "OK",
+                        Message = "Not found",
+                        Package = null
+                    };
+
+                return new Response<InstructorRating>
+                {
+                    Status = "OK",
+                    Message = "OK",
+                    Package = await instructorRating
+                    .Where(x => x.InstructorId==instructorId)
+                    .FirstAsync()
+                };
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new Response
+                {
+                    Status = "Failure",
+                    Message = e.Message
+                });
+            }
+
+        }
+        /// <summary>
         /// Получить список учеников с рейтингом
         /// </summary>
         /// <param name="instructorId"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         [Route(nameof(GetStudentRatings))]
-        public async Task<ActionResult<Response<IEnumerable<StudentRating>>>> GetStudentRatings([FromBody] string? instructorId=null)
+        public async Task<ActionResult<Response<IEnumerable<StudentRating>>>> GetStudentRatings([FromBody] string? instructorId = null)
         {
             try
             {
-                var groupedGradeses = await _context.Database.SqlQueryRaw<string>(
+                var groupedGrades = await _context.Database.SqlQueryRaw<string>(
                     "select cast(students.studentid as NVARCHAR(MAX))+';'+CAST(count(grade) as NVARCHAR(MAX))+';'+CAST(coalesce(avg(grade),0.0) as NVARCHAR(MAX)) " +
                     " from students left join classes on students.studentid = classes.studentid " +
                     " left join GradesByInstructorToStudent on classes.classid = GradesByInstructorToStudent.classid " +
@@ -308,13 +380,10 @@ namespace DrivingSchoolWebAPI.Controllers
                     .Where(x => instructorId == null || x.Instructor.UserId == instructorId)
                     .ToListAsync();
                 var dict = new Dictionary<int, (int count, float avg)>();
-                foreach (var w in groupedGradeses)
+                foreach (var groupedGrade in groupedGrades)
                 {
-                    if (w == null) continue;
-                    var values = w.Split(';');
-                    var studentId = int.Parse(values[0]);
-                    var count = int.Parse(values[1]);
-                    var avg = float.Parse(values[2].Replace('.', ','));
+                    if (groupedGrade == null) continue;
+                    ParseGroupedGrade(groupedGrade, out int studentId, out int count, out float avg);
                     dict[studentId] = (count, avg);
                 }
                 var studentRatings = new List<StudentRating>();
@@ -329,6 +398,59 @@ namespace DrivingSchoolWebAPI.Controllers
                     Status = "OK",
                     Message = "OK",
                     Package = studentRatings
+                };
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new Response
+                {
+                    Status = "Failure",
+                    Message = e.Message
+                });
+            }
+        }
+
+        private static void ParseGroupedGrade(string? groupedGrade, out int studentId, out int count, out float avg)
+        {
+            var values = groupedGrade.Split(';');
+            studentId = int.Parse(values[0]);
+            count = int.Parse(values[1]);
+            avg = float.Parse(values[2].Replace('.', ','));
+        }
+
+        /// <summary>
+        /// Получить ученика с рейтингом по id
+        /// </summary>
+        /// <param name="studentId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route(nameof(GetStudentRating))]
+        public async Task<ActionResult<Response<StudentRating>>> GetStudentRating(int studentId)
+        {
+            try
+            {
+                var groupedGrade = await _context.Database.SqlQueryRaw<string>(
+                    "select cast(students.studentid as NVARCHAR(MAX))+';'+CAST(count(grade) as NVARCHAR(MAX))+';'+CAST(coalesce(avg(grade),0.0) as NVARCHAR(MAX)) " +
+                    " from students left join classes on students.studentid = classes.studentid " +
+                    " left join GradesByInstructorToStudent on classes.classid = GradesByInstructorToStudent.classid " +
+                    $" where students.studentid = {studentId} " +
+                    " group by students.studentid ")
+                    .FirstAsync();
+
+                var student = await _context.Students
+                    .Include(x => x.User)
+                    .Include(x => x.Instructor)
+                    .Include(x => x.Instructor.User)
+                    .Where(x => x.StudentId == studentId)
+                    .FirstAsync();
+
+                ParseGroupedGrade(groupedGrade, out studentId, out int count, out float avg);
+
+                return new Response<StudentRating>
+                {
+                    Status = "OK",
+                    Message = "OK",
+                    Package = StudentRating.FromStudent(student, count, avg)
                 };
             }
             catch (Exception e)

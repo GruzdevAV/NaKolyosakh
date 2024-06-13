@@ -91,102 +91,15 @@ namespace DrivingSchoolWebAPI.Controllers
 
         }
         /// <summary>
-        /// Проверить, работает ли сервер.
+        /// Проверить, работает ли сервер и подходит ли токен аутентификации.
         /// </summary>
         /// <returns></returns>
+        [Authorize]
         [HttpPost]
         [Route("Ping")]
-        public ActionResult<Response> Ping()
+        public ActionResult<Response<bool>> Ping()
         {
-            return Ok(new Response { Status = "Success", Message = "Pong" });
+            return Ok(new Response<bool> { Status = "Success", Message = "Pong", Package=true });
         }
-        [HttpPost]
-        [Route("test")]
-        public ActionResult<Response<LoginResponse>> test()
-        {
-            try
-            {
-                return Ok(new Response<LoginResponse>
-                {
-                    Message = "OK",
-                    Status = "OK",
-                    Package = null
-                });
-            }
-            catch (Exception e)
-            {
-                return BadRequest(new Response
-                {
-                    Status = "Failure",
-                    Message = e.Message
-                });
-            }
-        }
-
-        [HttpPost]
-        [Route(nameof(Login1))]
-        public async Task<ActionResult<Response<LoginResponse>>> Login1([FromBody] LoginModel model)
-        {
-            try
-            {
-                var user = await _userManager.FindByEmailAsync(model.Email);
-                throw new NotImplementedException(model.Email);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(new Response
-                {
-                    Status = "Failure",
-                    Message = e.Message
-                });
-            }
-
-        }
-
-        [HttpPost]
-        [Route(nameof(Login2))]
-        public async Task<ActionResult<Response<LoginResponse>>> Login2([FromBody] LoginModel model)
-        {
-            try
-            {
-                var user = await _userManager.FindByEmailAsync(model.Email);
-                var t = await _userManager.CheckPasswordAsync(user, model.Password);
-                throw new NotImplementedException();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(new Response
-                {
-                    Status = "Failure",
-                    Message = e.Message
-                });
-            }
-
-        }
-        [HttpPost]
-        [Route(nameof(Login3))]
-        public async Task<ActionResult<Response<LoginResponse>>> Login3([FromBody] LoginModel model)
-        {
-            try
-            {
-                throw new NotImplementedException(_userManager.ToString());
-            }
-            catch (Exception e)
-            {
-                return BadRequest(new Response
-                {
-                    Status = "Failure",
-                    Message = e.Message
-                });
-            }
-
-        }
-        [HttpGet]
-        [Route("test1")]
-        public string test1()
-        {
-            return "works";
-        }
-
     }
 }

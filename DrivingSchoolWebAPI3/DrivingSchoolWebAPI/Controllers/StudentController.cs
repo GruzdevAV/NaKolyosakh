@@ -48,7 +48,7 @@ namespace DrivingSchoolWebAPI.Controllers
                         Status = "OK",
                         Package = null
                     });
-                // Вернуть инструктора по Id инструктора, указанного у студента
+                // Вернуть инструктора по Id инструктора, указанного у ученика
                 return Ok(new Response<Instructor>
                 {
                     Message = "OK",
@@ -237,7 +237,7 @@ namespace DrivingSchoolWebAPI.Controllers
                     return BadRequest(new Response
                     {
                         Status = "Failed",
-                        Message = "Студентам нельзя ставить отметку занятию, которое ещё не завершилось или было отменено."
+                        Message = "Ученикам нельзя ставить отметку занятию, которое ещё не завершилось или было отменено."
                     });
                 var addedGrade = await _context.GradesByStudentToInstructor.AddAsync(grade);
                 await _context.SaveChangesAsync();

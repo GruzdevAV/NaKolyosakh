@@ -1,21 +1,18 @@
 package com.example.drivingschoolappandroidclient.ui.registration
 
 import android.os.Bundle
+import android.util.Patterns.EMAIL_ADDRESS
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.drivingschoolappandroidclient.App
 import com.example.drivingschoolappandroidclient.databinding.FragmentRegisterUserBinding
-import com.example.drivingschoolappandroidclient.models.models.Instructor
-import com.example.drivingschoolappandroidclient.models.models.MyCallback
-import com.example.drivingschoolappandroidclient.models.models.MyResponse
+import com.example.drivingschoolappandroidclient.models.models.RegisterInstructorCallback
 import com.example.drivingschoolappandroidclient.models.models.RegisterModel
-import com.example.drivingschoolappandroidclient.models.models.Student
-import retrofit2.Call
-import retrofit2.Response
+import com.example.drivingschoolappandroidclient.models.models.RegisterStudentCallback
 
 class RegisterUserFragment : Fragment() {
 
@@ -27,22 +24,21 @@ class RegisterUserFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        class RegisterInstructorCallback : MyCallback<MyResponse<Instructor?>>() {
-            override fun onResponse(p0: Call<MyResponse<Instructor?>>, p1: Response<MyResponse<Instructor?>>) {
-                Toast.makeText(this@RegisterUserFragment.context,p1.body().toString(), Toast.LENGTH_LONG).show()
-                App.reloadInstructors()
-            }
-
-        }
         binding = FragmentRegisterUserBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this)[RegisterUserViewModel::class.java]
-
+        checkValuesChanged()
         with(binding){
-
+            etRegEmail.doAfterTextChanged { checkValuesChanged() }
+            etRegLastname.doAfterTextChanged { checkValuesChanged() }
+            etRegFirstname.doAfterTextChanged { checkValuesChanged() }
+            etRegPassword.doAfterTextChanged { checkValuesChanged() }
+            etRegPhone.doAfterTextChanged { checkValuesChanged() }
+            
             btnRegister.setOnClickListener {
+                App.block()
                 val model = RegisterModel(
                     email = etRegEmail.text.toString(),
-                    lastName = etRegLastnaem.text.toString(),
+                    lastName = etRegLastname.text.toString(),
                     patronymic = etRegPatronymic.text.toString(),
                     firstName = etRegFirstname.text.toString(),
                     password = etRegPassword.text.toString(),
@@ -59,15 +55,21 @@ class RegisterUserFragment : Fragment() {
                     App.controller.api.registerStudent(
                         model,App.controller.loginResponse.value!!.authHead
                     ).enqueue(RegisterStudentCallback())
+                else App.unblock()
             }
             return root
         }
     }
 
-    class RegisterStudentCallback :
-        MyCallback<MyResponse<Student?>>() {
-        override fun onResponse(p0: Call<MyResponse<Student?>>, p1: Response<MyResponse<Student?>>) {
-            App.reloadStudents()
+    private fun checkValuesChanged() {
+        with(binding){
+            btnRegister.isEnabled = etRegLastname.text.isNotEmpty()
+                    && etRegFirstname.text.isNotEmpty()
+                    && etRegPassword.text.isNotEmpty()
+                    && EMAIL_ADDRESS.matcher(etRegEmail.text).matches()
+                    && etRegPhone.text.isNotEmpty()
+                    && (rbStudent.isChecked || rbInstructor.isChecked)
         }
     }
+
 }

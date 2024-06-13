@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.CompoundButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -16,7 +17,7 @@ import com.example.drivingschoolappandroidclient.models.models.InstructorSchedul
 import com.example.drivingschoolappandroidclient.models.models.SetInnerScheduleCallback
 import java.time.LocalDate
 
-class AddInnerScheduleFragment : Fragment() {
+class AddInnerScheduleFragment : Fragment(), CompoundButton.OnCheckedChangeListener {
 
     private lateinit var binding: FragmentAddInnerScheduleBinding
     private lateinit var viewModel: AddInnerScheduleViewModel
@@ -31,7 +32,11 @@ class AddInnerScheduleFragment : Fragment() {
             android.R.layout.simple_spinner_item,
             App.instructors.value!!
         )
+        onCheckedChanged(null,false)
         with(binding){
+            for (cb in listOf(cbClass1,cbClass2,cbClass3,cbClass4,cbClass5,cbClass6,cbClass7))
+                cb.setOnCheckedChangeListener(this@AddInnerScheduleFragment)
+
             btnInnerCancel.setOnClickListener {
                 findNavController().popBackStack()
             }
@@ -40,7 +45,7 @@ class AddInnerScheduleFragment : Fragment() {
             }
             spnInnerInstructors.adapter = viewModel.instructorAdapter
             btnInnerOk.setOnClickListener {
-                App.blocked.value = true
+                App.block()
                 val instructor = spnInnerInstructors.selectedItem as Instructor
                 val classes : MutableList<ClassModel> = mutableListOf()
                 if(cbClass1.isChecked) classes.add(ClassModel(
@@ -75,6 +80,14 @@ class AddInnerScheduleFragment : Fragment() {
                 findNavController().popBackStack()
             }
             return root
+        }
+    }
+
+    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+        with(binding) {
+            btnInnerOk.isEnabled = cbClass1.isChecked || cbClass2.isChecked ||
+                    cbClass3.isChecked || cbClass4.isChecked || cbClass5.isChecked ||
+                    cbClass6.isChecked || cbClass7.isChecked
         }
     }
 

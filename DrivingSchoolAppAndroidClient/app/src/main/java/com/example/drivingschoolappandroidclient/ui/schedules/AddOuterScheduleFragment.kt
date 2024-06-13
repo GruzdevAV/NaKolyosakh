@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -22,10 +23,21 @@ class AddOuterScheduleFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAddOuterScheduleBinding.inflate(layoutInflater)
-        viewModel = ViewModelProvider(this).get(AddOuterScheduleViewModel::class.java)
+        viewModel = ViewModelProvider(this)[AddOuterScheduleViewModel::class.java]
+        onTextChanged()
         with(binding){
+
+            etIdGoogleSheet.doAfterTextChanged { onTextChanged() }
+            etPageName.doAfterTextChanged { onTextChanged() }
+            etTimeRange.doAfterTextChanged { onTextChanged() }
+            etDateRange.doAfterTextChanged { onTextChanged() }
+            etClassesRange.doAfterTextChanged { onTextChanged() }
+            etFreeRange.doAfterTextChanged { onTextChanged() }
+            etNotFreeRange.doAfterTextChanged { onTextChanged() }
+            etYearRange.doAfterTextChanged { onTextChanged() }
+
             btnAddOuterScheduleOk.setOnClickListener {
-                App.blocked.value = true
+                App.block()
                 App.controller.api.addOuterScheduleToMe(
                     AddOuterScheduleModel(
                         googleSheetId = etIdGoogleSheet.text.toString(),
@@ -46,6 +58,16 @@ class AddOuterScheduleFragment : Fragment() {
                 findNavController().popBackStack()
             }
             return root
+        }
+    }
+
+    private fun onTextChanged() {
+        with(binding) {
+            btnAddOuterScheduleOk.isEnabled = etIdGoogleSheet.text.isNotEmpty() &&
+                    etPageName.text.isNotEmpty() && etTimeRange.text.isNotEmpty() &&
+                    etDateRange.text.isNotEmpty() && etClassesRange.text.isNotEmpty() &&
+                    etFreeRange.text.isNotEmpty() && etNotFreeRange.text.isNotEmpty() &&
+                    etYearRange.text.isNotEmpty()
         }
     }
 

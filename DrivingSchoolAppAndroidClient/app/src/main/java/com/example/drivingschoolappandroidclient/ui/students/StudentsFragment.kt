@@ -55,7 +55,7 @@ class StudentsFragment : Fragment() {
                 val instructor = spStudentsInstructors.selectedItem as Instructor?
                 val student = viewModel.studentsAdapter.selected
                 if (instructor!=null && student!=null){
-                    App.blocked.value = true
+                    App.block()
                     App.controller.api.setInstructorToStudent(InstructorStudentPairModel(
                         instructor.instructorId,
                         student.studentId

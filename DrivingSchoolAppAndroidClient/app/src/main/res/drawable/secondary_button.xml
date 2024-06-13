@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <stroke android:color="@color/primary" android:width="2dp"/>
-    <corners android:radius="5dp"/>
-</shape>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="true">
+        <shape>
+            <stroke android:color="@color/primary" android:width="2dp"/>
+            <corners android:radius="5dp"/>
+        </shape>
+    </item>
+    <item android:state_enabled="false">
+        <shape>
+            <stroke android:color="@color/gray_darker" android:width="2dp"/>
+            <corners android:radius="5dp"/>
+        </shape>
+    </item>
+</selector>

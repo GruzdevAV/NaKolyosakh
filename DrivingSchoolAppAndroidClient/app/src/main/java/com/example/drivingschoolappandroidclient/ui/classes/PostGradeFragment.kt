@@ -57,7 +57,7 @@ class PostGradeFragment : Fragment() {
                     tvPostGradeToWhoTitle.text = "Инструктор: "
                     tvPostGradeToWhoText.text = `class`.instructor.toString()
                     btnPostGradeOk.setOnClickListener {
-                        App.blocked.value = true
+                        App.block()
                         App.controller.api.postGradeToInstructorForClass(
                             GradeByStudentToInstructorModel(
                                 `class`.classId,
@@ -74,7 +74,7 @@ class PostGradeFragment : Fragment() {
                     tvPostGradeToWhoTitle.text = "Ученик: "
                     tvPostGradeToWhoText.text = `class`.student.toString()
                     btnPostGradeOk.setOnClickListener {
-                        App.blocked.value = true
+                        App.block()
                         App.controller.api.postGradeToStudentForClass(
                             GradeByInstructorToStudentModel(
                                 `class`.classId,

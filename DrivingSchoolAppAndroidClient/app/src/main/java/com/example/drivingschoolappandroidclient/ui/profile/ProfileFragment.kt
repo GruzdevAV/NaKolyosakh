@@ -62,7 +62,7 @@ class ProfileFragment : Fragment() {
                 )
 //                viewModel.editMeModel.profilePicture = (ivPfp.drawable as BitmapDrawable).bitmap
 
-                App.blocked.value = true
+                App.block()
                 App.controller.api.editMe(
                     viewModel.editMeModel,
                     App.controller.loginResponse.value!!.authHead

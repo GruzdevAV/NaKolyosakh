@@ -29,11 +29,6 @@ class NavigationDrawerActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.appBarNavigationDrawer.toolbar)
-
-//        binding.appBarNavigationDrawer.fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
-//        }
         loadData()
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
@@ -47,9 +42,9 @@ class NavigationDrawerActivity : AppCompatActivity() {
         }
         App.blocked.observe(this){
             if(it){
-                App.showLoadingScreen(window,layoutInflater)
+                App.showWaitingScreen(window,layoutInflater)
             } else {
-                App.hideLoadingScreen(window)
+                App.hideWaitingScreen(window)
             }
         }
         App.controller.loginResponse.observe(this){
@@ -75,6 +70,8 @@ class NavigationDrawerActivity : AppCompatActivity() {
         }
         App.response.observe(this){
             it?.let {
+                if(it.status.uppercase() == "OK" && it.message.uppercase() == "OK")
+                    return@observe
                 val mes = "${it.status}:\n${it.message}"
                 Toast.makeText(this,mes,Toast.LENGTH_LONG).show()
             }
@@ -96,7 +93,7 @@ class NavigationDrawerActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
-
+    // Загрузка данных
     private fun loadData() {
         CoroutineScope(Dispatchers.IO).launch {
             with(App){

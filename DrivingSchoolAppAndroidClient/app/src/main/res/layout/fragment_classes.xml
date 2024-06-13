@@ -67,6 +67,14 @@
                     android:layout_height="wrap_content"
                     android:textOff="Показать мои занятия"
                     android:textOn="Показать все занятия" />
+
+                <ToggleButton
+                    android:id="@+id/tb_show_classes_of_my_instructor"
+                    style="@style/SecondaryButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textOff="Показать занятия моего инструктора"
+                    android:textOn="Показать все занятия" />
             </LinearLayout>
 
         </LinearLayout>

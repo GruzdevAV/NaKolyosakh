@@ -37,6 +37,10 @@ class ClassesFragment : Fragment() {
             val size = maxOf(viewModel.classesAdapter.classes?.size?:0, it?.size?:0)
             viewModel.classesAdapter.notifyItemRangeChanged(0, size)
         }
+        App.classesOfMyInstructor.observe(viewLifecycleOwner){
+            val size = maxOf(viewModel.classesAdapter.classes?.size?:0, it?.size?:0)
+            viewModel.classesAdapter.notifyItemRangeChanged(0, size)
+        }
         App.myStudents.observe(viewLifecycleOwner){
             viewModel.studentAdapter = viewModel.studentAdapter ?: ArrayAdapter(
                 requireContext(),
@@ -45,9 +49,17 @@ class ClassesFragment : Fragment() {
             )
         }
         with(binding){
+            viewModel.classesAdapter.selectedPosition.observe(viewLifecycleOwner) { index ->
+                (index != null).also {
+                    btnClassesAddStudent.isEnabled = it
+                    btnCancelClass.isEnabled = it
+                    btnAddGrade.isEnabled = it
+                }
+            }
+
             spnStudents.adapter = viewModel.studentAdapter
             btnCancelClass.setOnClickListener {
-                App.blocked.value = true
+                App.block()
                 App.controller.api.cancelClass(
                     viewModel.classesAdapter.selected!!.classId,
                     App.authHead
@@ -62,7 +74,7 @@ class ClassesFragment : Fragment() {
                 )
             }
             btnClassesAddStudent.setOnClickListener {
-                App.blocked.value = true
+                App.block()
                 val studentId = if(App.controller.loginResponse.value!!.role == UserRoles.student)
                     App.students.value?.first {
                         it.userId == App.controller.loginResponse.value!!.id
@@ -81,18 +93,32 @@ class ClassesFragment : Fragment() {
             tbShowMyClasses.setOnCheckedChangeListener { buttonView, isChecked ->
                 rvClasses.recycledViewPool.clear()
                 viewModel.classesAdapter.showMyClasses = isChecked
+                val isStudent = App.controller.loginResponse.value?.role == UserRoles.student
                 (if(isChecked) View.VISIBLE else View.GONE). also {
                     btnAddGrade.visibility = it
                     llClassesAddStudent.visibility = it
                     btnCancelClass.visibility = it
+                    tbShowClassesOfMyInstructor.visibility = if(isStudent) it else View.GONE
                 }
             }
-            (if(viewModel.classesAdapter.showMyClasses)
-                View.VISIBLE else View.GONE).also {
-                btnAddGrade.visibility = it
-                llClassesAddStudent.visibility = it
-                btnCancelClass.visibility = it
+            tbShowClassesOfMyInstructor.setOnCheckedChangeListener { buttonView, isChecked ->
+                rvClasses.recycledViewPool.clear()
+                viewModel.classesAdapter.showMyClasses = isChecked
+                (if(isChecked) View.VISIBLE else View.GONE). also {
+                    btnAddGrade.visibility = it
+                    llClassesAddStudent.visibility = it
+                    btnCancelClass.visibility = it
+                    tbShowMyClasses.visibility = it
+                }
             }
+            tbShowMyClasses.isChecked = false
+//            (if(viewModel.classesAdapter.showMyClasses)
+//                View.VISIBLE else View.GONE).also {
+//                btnAddGrade.visibility = it
+//                llClassesAddStudent.visibility = it
+//                btnCancelClass.visibility = it
+//                tbShowClassesOfMyInstructor.visibility = if(App.controller.loginResponse.value.role)
+//            }
             App.controller.loginResponse.observe(viewLifecycleOwner){
                 when(it?.role){
                     UserRoles.admin -> {
@@ -102,11 +128,13 @@ class ClassesFragment : Fragment() {
                         llClassesForStudentsAndInstructors.visibility = View.VISIBLE
                         spnStudents.visibility = View.GONE
                         btnClassesAddStudent.text = "Записать себя"
+                        tbShowClassesOfMyInstructor.visibility = View.VISIBLE
                     }
                     UserRoles.instructor -> {
                         llClassesForStudentsAndInstructors.visibility = View.VISIBLE
                         spnStudents.visibility = View.VISIBLE
                         btnClassesAddStudent.text = "Записать ученика"
+                        tbShowClassesOfMyInstructor.visibility = View.GONE
                     }
                 }
             }
@@ -122,7 +150,10 @@ class ClassesFragment : Fragment() {
         super.onDestroy()
         App.classes.removeObservers(this)
         App.myClasses.removeObservers(this)
+        App.classesOfMyInstructor.removeObservers(this)
         App.students.removeObservers(this)
         App.controller.loginResponse.removeObservers(this)
+        viewModel.classesAdapter.selectedPosition.removeObservers(this)
     }
+
 }

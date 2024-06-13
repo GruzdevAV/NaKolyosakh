@@ -361,7 +361,7 @@ namespace DrivingSchoolWebAPI.Controllers
         /// </summary>
         /// <param name="instructorId"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPost]
         [Route(nameof(GetStudentRatings))]
         public async Task<ActionResult<Response<IEnumerable<StudentRating>>>> GetStudentRatings([FromBody] string? instructorId = null)
         {

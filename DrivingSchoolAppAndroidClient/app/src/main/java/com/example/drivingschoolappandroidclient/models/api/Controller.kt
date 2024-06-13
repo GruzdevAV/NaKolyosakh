@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 
 class Controller {
@@ -20,6 +21,7 @@ class Controller {
         val client = OkHttpClient().newBuilder()
             .followRedirects(true)
             .followSslRedirects(true)
+            .callTimeout(10,TimeUnit.SECONDS)
             .build()
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -30,7 +32,7 @@ class Controller {
     }
     var loginResponse: MutableLiveData<LoginResponse?> = MutableLiveData(null)
     companion object{
-        const val BASE_URL = "https://gruzdevav.somee.com/api/"
-//        const val BASE_URL = "http://192.168.43.226:45457/api/"
+//        const val BASE_URL = "https://gruzdevav.somee.com/api/"
+        const val BASE_URL = "http://192.168.43.226:45455/api/"
     }
 }

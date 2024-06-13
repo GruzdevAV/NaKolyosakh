@@ -85,7 +85,7 @@
                     android:text="Фамилия" />
 
                 <EditText
-                    android:id="@+id/et_reg_lastnaem"
+                    android:id="@+id/et_reg_lastname"
                     style="@style/TextField"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.drivingschoolappandroidclient.App
-import com.example.drivingschoolappandroidclient.models.models.UserRoles
 import com.example.drivingschoolappandroidclient.databinding.FragmentInstructorsBinding
+import com.example.drivingschoolappandroidclient.models.models.UserRoles
 
 class InstructorsFragment : Fragment() {
 
@@ -22,11 +22,11 @@ class InstructorsFragment : Fragment() {
     ): View {
         binding = FragmentInstructorsBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this).get(InstructorsViewModel::class.java)
-        App.instructors.observe(viewLifecycleOwner){
+        App.instructorRatings.observe(viewLifecycleOwner){
             val size = maxOf(viewModel.instructorsAdapter.instructors.size, it?.size?:0)
             viewModel.instructorsAdapter.notifyItemRangeChanged(0,size)
         }
-        App.myInstructor.observe(viewLifecycleOwner){
+        App.myInstructorRating.observe(viewLifecycleOwner){
             val size = maxOf(viewModel.instructorsAdapter.instructors.size, 1)
             viewModel.instructorsAdapter.notifyItemRangeChanged(0,size)
         }
@@ -49,7 +49,7 @@ class InstructorsFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        App.myInstructor.removeObservers(this)
+        App.myInstructorRating.removeObservers(this)
         App.instructors.removeObservers(this)
     }
 }

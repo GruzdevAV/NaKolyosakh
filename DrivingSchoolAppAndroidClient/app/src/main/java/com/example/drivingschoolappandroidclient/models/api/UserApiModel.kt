@@ -49,6 +49,16 @@ interface UserApiModel {
     @POST("GetStudentRatings")
     fun getStudentRatings(@Header("Authorization") authHead: String) :
             Call<MyResponse<List<StudentRating>?>>
+    @GET("GetStudentRating")
+    fun getStudentRating(
+        @Query("studentId") studentId: Int,
+        @Header("Authorization") authHead: String
+    ) : Call<MyResponse<StudentRating?>>
+    @GET("GetInstructorRating")
+    fun getInstructorRating(
+        @Query("instructorId") instructorId: Int,
+        @Header("Authorization") authHead: String
+    ) : Call<MyResponse<InstructorRating?>>
     @POST("GetStudentRatings")
     fun getMyStudentRatings(
         @Body instructorId: String,

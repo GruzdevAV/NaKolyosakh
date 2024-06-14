@@ -68,6 +68,12 @@ namespace DrivingSchoolWebAPI.Controllers
                 @class = cl.Entity;
                 if (@class.IsOuterClass)
                 {
+                    @class.Student = await _context.Students
+                        .Include(x => x.User)
+                        .Include(x => x.Instructor)
+                        .Include(x => x.Instructor.User)
+                        .Where(x => x.StudentId == @class.StudentId)
+                        .FirstAsync();
                     bool isMarked = Methods.MakeSureOuterMarked(@class, DefaultData.ApiClient);
                 }
                 return Ok(new Response<ClassStudentPairModel>

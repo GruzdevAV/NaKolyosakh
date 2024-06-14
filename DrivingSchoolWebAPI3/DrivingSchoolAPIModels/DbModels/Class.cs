@@ -19,8 +19,8 @@ namespace DrivingSchoolAPIModels
         [ForeignKey(nameof(InnerScheduleOfInstructorId))]
         public InnerScheduleOfInstructor InnerScheduleOfInstructor { get; set; }
         // Если занятие получено из внешнего источника
-        public int? OuterScheduleId => InnerScheduleOfInstructor.OuterScheduleId;
-        public OuterScheduleOfInstructor? OuterScheduleOfInstructor => InnerScheduleOfInstructor.OuterScheduleOfInstructor;
+        public int? OuterScheduleId => InnerScheduleOfInstructor?.OuterScheduleId;
+        public OuterScheduleOfInstructor? OuterScheduleOfInstructor => InnerScheduleOfInstructor?.OuterScheduleOfInstructor;
         // Сам занимающийся ученик
         public int? StudentId { get; set; }
         [ForeignKey(nameof(StudentId))]

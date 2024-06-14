@@ -33,6 +33,9 @@ namespace DrivingSchoolWebAPI.Controllers
             {
                 // Найти ученика по Id
                 var student = await _context.Students
+                    .Include(x => x.User)
+                    .Include(x => x.Instructor)
+                    .Include(x => x.Instructor.User)
                     .Where(x => x.User.Id == studentUserId)
                     .FirstAsync();
                 if (student == null)
@@ -48,15 +51,11 @@ namespace DrivingSchoolWebAPI.Controllers
                         Status = "OK",
                         Package = null
                     });
-                // Вернуть инструктора по Id инструктора, указанного у ученика
                 return Ok(new Response<Instructor>
                 {
                     Message = "OK",
                     Status = "OK",
-                    Package = await _context.Instructors
-                    .Include(x => x.User)
-                    .Where(x => x.InstructorId == student.InstructorId)
-                    .FirstAsync()
+                    Package = student.Instructor
                 });
             }
             catch (Exception e)
@@ -80,7 +79,14 @@ namespace DrivingSchoolWebAPI.Controllers
         {
             try
             {
-                var instructor = (await GetMyInstructor(studentUserId)).Value?.Package;
+                var student = await _context.Students
+                    .Include(x => x.User)
+                    .Include(x => x.Instructor)
+                    .Include(x => x.Instructor.User)
+                    .Where(x => x.UserId == studentUserId)
+                    .FirstAsync();
+                // Найти своего инструктора
+                var instructor = student.Instructor;
                 if (instructor == null)
                     return Ok(new Response<IEnumerable<Class>>
                     {
@@ -101,7 +107,7 @@ namespace DrivingSchoolWebAPI.Controllers
                     .Include(x => x.InnerScheduleOfInstructor.OuterScheduleOfInstructor)
                     .Include(x => x.InnerScheduleOfInstructor.Instructor)
                     .Include(x => x.InnerScheduleOfInstructor.Instructor.User)
-                    .Where(x => x.InnerScheduleOfInstructor.Instructor.InstructorId == instructor.InstructorId)
+                    .Where(x => x.Student.UserId == studentUserId)
                     .ToListAsync()
                 });
             }
@@ -125,8 +131,14 @@ namespace DrivingSchoolWebAPI.Controllers
         {
             try
             {
+                var student = await _context.Students
+                    .Include(x => x.User)
+                    .Include(x => x.Instructor)
+                    .Include(x => x.Instructor.User)
+                    .Where(x => x.UserId == studentUserId)
+                    .FirstAsync();
                 // Найти своего инструктора
-                var instructor = (await GetMyInstructor(studentUserId)).Value?.Package;
+                var instructor = student.Instructor;
                 if (_context.Classes == null ||
                     instructor == null)
                     return Ok(new Response<IEnumerable<Class>>

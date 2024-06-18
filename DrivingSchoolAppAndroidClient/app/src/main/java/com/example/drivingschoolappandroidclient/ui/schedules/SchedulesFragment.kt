@@ -10,8 +10,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.drivingschoolappandroidclient.App
 import com.example.drivingschoolappandroidclient.R
-import com.example.drivingschoolappandroidclient.models.models.UserRoles
 import com.example.drivingschoolappandroidclient.databinding.FragmentSchedulesBinding
+import com.example.drivingschoolappandroidclient.models.models.UserRoles
 
 class SchedulesFragment : Fragment() {
 
@@ -51,13 +51,19 @@ class SchedulesFragment : Fragment() {
             }
             when(App.controller.loginResponse.value!!.role){
                 UserRoles.admin -> {
+                    llSchedulesForAdmin.visibility = View.VISIBLE
                     llSchedulesForInstructors.visibility = View.GONE
                     llSchedulesForInstructorsAndStudents.visibility = View.GONE
                 }
-                UserRoles.instructor -> llSchedulesForAdmin.visibility = View.GONE
-                UserRoles.student -> {
-                    llSchedulesForInstructors.visibility = View.GONE
+                UserRoles.instructor -> {
                     llSchedulesForAdmin.visibility = View.GONE
+                    llSchedulesForInstructors.visibility = View.VISIBLE
+                    llSchedulesForInstructorsAndStudents.visibility = View.VISIBLE
+                }
+                UserRoles.student -> {
+                    llSchedulesForAdmin.visibility = View.GONE
+                    llSchedulesForInstructors.visibility = View.GONE
+                    llSchedulesForInstructorsAndStudents.visibility = View.VISIBLE
                 }
             }
             return root

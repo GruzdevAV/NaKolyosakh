@@ -94,31 +94,26 @@ class ClassesFragment : Fragment() {
                 rvClasses.recycledViewPool.clear()
                 viewModel.classesAdapter.showMyClasses = isChecked
                 val isStudent = App.controller.loginResponse.value?.role == UserRoles.student
-                (if(isChecked) View.VISIBLE else View.GONE). also {
+                (if (isChecked) View.VISIBLE else View.GONE).also {
                     btnAddGrade.visibility = it
                     llClassesAddStudent.visibility = it
                     btnCancelClass.visibility = it
-                    tbShowClassesOfMyInstructor.visibility = if(isStudent) it else View.GONE
                 }
+                tbShowClassesOfMyInstructor.visibility =
+                    if (isChecked || !isStudent) View.GONE else View.VISIBLE
             }
             tbShowClassesOfMyInstructor.setOnCheckedChangeListener { buttonView, isChecked ->
                 rvClasses.recycledViewPool.clear()
-                viewModel.classesAdapter.showMyClasses = isChecked
+                viewModel.classesAdapter.showClassesOfMyInstructor = isChecked
                 (if(isChecked) View.VISIBLE else View.GONE). also {
                     btnAddGrade.visibility = it
                     llClassesAddStudent.visibility = it
                     btnCancelClass.visibility = it
-                    tbShowMyClasses.visibility = it
                 }
+                tbShowMyClasses.visibility = if(isChecked) View.GONE else View.VISIBLE
             }
             tbShowMyClasses.isChecked = false
-//            (if(viewModel.classesAdapter.showMyClasses)
-//                View.VISIBLE else View.GONE).also {
-//                btnAddGrade.visibility = it
-//                llClassesAddStudent.visibility = it
-//                btnCancelClass.visibility = it
-//                tbShowClassesOfMyInstructor.visibility = if(App.controller.loginResponse.value.role)
-//            }
+
             App.controller.loginResponse.observe(viewLifecycleOwner){
                 when(it?.role){
                     UserRoles.admin -> {

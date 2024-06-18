@@ -21,7 +21,10 @@ class Controller {
         val client = OkHttpClient().newBuilder()
             .followRedirects(true)
             .followSslRedirects(true)
-            .callTimeout(10,TimeUnit.SECONDS)
+            .callTimeout(60,TimeUnit.SECONDS)
+            .connectTimeout(60,TimeUnit.SECONDS)
+            .readTimeout(60,TimeUnit.SECONDS)
+            .writeTimeout(60,TimeUnit.SECONDS)
             .build()
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -32,7 +35,6 @@ class Controller {
     }
     var loginResponse: MutableLiveData<LoginResponse?> = MutableLiveData(null)
     companion object{
-//        const val BASE_URL = "https://gruzdevav.somee.com/api/"
-        const val BASE_URL = "http://192.168.43.226:45455/api/"
+        const val BASE_URL = "https://gruzdevav.somee.com/api/"
     }
 }

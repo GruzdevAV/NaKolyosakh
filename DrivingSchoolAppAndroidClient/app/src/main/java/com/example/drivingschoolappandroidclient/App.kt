@@ -202,7 +202,7 @@ class App : Application() {
                 where T : MyResponse<*>? {
             response.value = MyResponse(
                 status = "Возникла ошибка",
-                message = p1.message()?:"",
+                message = p1.errorBody()?.string()?:"",
                 `package` = null
             )
             unblock()

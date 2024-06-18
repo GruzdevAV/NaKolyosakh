@@ -246,7 +246,7 @@ class AddOuterScheduleCallback :
     ) {
         default(p0,p1,"AddOuterSchedule"){
             App.reloadInnerSchedules()
-            App.reloadMyInnerSchedules()
+            App.reloadClasses()
         }
     }
 
@@ -301,7 +301,7 @@ class GetClassesOfMyInstructorCallback :
         p0: Call<MyResponse<List<Class>?>>,
         p1: Response<MyResponse<List<Class>?>>
     ) {
-        default(p0,p1,"GetMyClassesGetClassesOfMyInstructor"){
+        default(p0,p1,"GetClassesOfMyInstructor"){
             App.classesOfMyInstructor.value = it.`package`
         }
     }
@@ -344,7 +344,8 @@ class SetClassCallback : MyCallback<MyResponse<ClassStudentPairModel?>>() {
     ) {
         default(p0,p1,"SetClass"){
             it.`package`?.let{ model ->
-                App.reloadClass(model.classId)
+//                App.reloadClass(model.classId)
+                App.reloadClasses()
             }
         }
     }
@@ -356,7 +357,8 @@ class CancelClassCallback : MyCallback<MyResponse<Int?>>() {
     override fun onResponse(p0: Call<MyResponse<Int?>>, p1: Response<MyResponse<Int?>>) {
         default(p0,p1,"CancelClass"){
             it.`package`?.let{ classId ->
-                App.reloadClass(classId)
+//                App.reloadClass(classId)
+                App.reloadClasses()
             }
         }
     }
@@ -367,7 +369,9 @@ class GetClassCallback : MyCallback<MyResponse<Class?>>() {
 
     override fun onResponse(p0: Call<MyResponse<Class?>>, p1: Response<MyResponse<Class?>>) {
         default(p0,p1,"GetClass"){ response ->
-            response.`package`?.let { pIt ->
+            response.`package`?.let { pIt ->{
+
+            }
                 var index = App.classes.value.orEmpty().indexOfFirst {
                     it.classId == pIt.classId
                 }
@@ -391,7 +395,8 @@ class PostGradeToStudentCallback : MyCallback<MyResponse<GradeByInstructorToStud
     ) {
         default(p0,p1,"PostGradeToStudent"){
             it.`package`?.classId?.let{classId ->
-                App.reloadClass(classId)
+//                App.reloadClass(classId)
+                App.reloadClasses()
                 App.reloadGrades()
             }
         }
@@ -407,7 +412,8 @@ class PostGradeToInstructorCallback : MyCallback<MyResponse<GradeByStudentToInst
     ) {
         default(p0,p1,"PostGradeToInstructor"){
             it.`package`?.classId?.let{ classId ->
-                App.reloadClass(classId)
+//                App.reloadClass(classId)
+                App.reloadClasses()
                 App.reloadGrades()
             }
         }

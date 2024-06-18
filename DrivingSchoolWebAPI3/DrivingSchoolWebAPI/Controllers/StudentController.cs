@@ -187,9 +187,17 @@ namespace DrivingSchoolWebAPI.Controllers
         {
             try
             {
+                // Найти ученика по Id
+                var student = await _context.Students
+                    .Include(x => x.User)
+                    .Include(x => x.Instructor)
+                    .Include(x => x.Instructor.User)
+                    .Where(x => x.User.Id == studentUserId)
+                    .FirstAsync();
+
                 // Найти своего инструктора
-                var instructor = (await GetMyInstructor(studentUserId)).Value?.Package;
-                if (instructor == null || instructor == null)
+                var instructor = student?.Instructor;
+                if (instructor == null)
                     return NotFound(new Response<IEnumerable<InnerScheduleOfInstructor>>
                     {
                         Message = "Not found",
